@@ -1,0 +1,41 @@
+Written by Neill Miller (neillm@thecodefactory.org)
+
+This simple port util program takes an ip address and a list of ports
+on the command line and checks to see if if each of the ports is
+active.
+
+If the port is not responding, a command is issued to restart the
+service via ssh.  All results are also logged.
+
+---------------------------------------------
+How to compile (tested on GNU/Linux only):
+---------------------------------------------
+
+gcc port_util.c -o port_util
+
+---------------------------------------------
+How to run:
+---------------------------------------------
+
+./port_util
+Usage: ./port_util -i IP-ADDRESS -p PORT1,PORT2,PORTN
+
+./port_util -i 192.168.1.5 -p 22,80,443,9999
+
+---------------------------------------------
+Example output log:
+---------------------------------------------
+
+-------------------------------------------------
+Starting system scan at Fri Nov 14 13:00:56 2014
+-------------------------------------------------
+Checking port 22 on 192.168.1.5
+Connection success, service is active!
+Checking port 80 on 192.168.1.5
+Connection success, service is active!
+Checking port 443 on 192.168.1.5
+Connection failed (Connection refused)
+Attempting to restart service with command: ssh root@192.168.1.5 "service https start"
+Checking port 9999 on 192.168.1.5
+Connection failed (Connection refused)
+Attempting to restart service with command: ssh root@192.168.1.5 "service unknown start"
